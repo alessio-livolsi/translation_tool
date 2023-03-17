@@ -11,7 +11,10 @@ The script uses the googletrans library and outputs translated text which, is th
 - Enter the language via the dest argument 
 - A link to all the available languages is commented in the script
 - Name the translated file accordingly
+- To run the script `python script.py`
 
 ## Considerations
 In the requirements we are using version 4.0.0-rc1 of googletrans library. This is because the latest version of the library requires an API key to use Google Translate service.
 Starting from version 4.1.0, Google requires a valid API key to use their Translation API service. Without a valid API key, the translation requests will fail with a 403 error. 
+
+## Enjoy 🙃

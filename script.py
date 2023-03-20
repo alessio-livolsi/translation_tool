@@ -1,8 +1,11 @@
+# Python
+import os
+import logging
+
+# Third Party
 from googletrans import Translator
 import polib
 from tqdm import tqdm
-import os
-import logging
 
 # Set up logging to a file
 logging.basicConfig(

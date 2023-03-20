@@ -1,7 +1,7 @@
 # Translation Tool
 
 ## Overview
-A simple script script that loads a PO file that iterates over each message and then translates the message using Google Translate API. 
+A simple script that loads a PO file that iterates over each message and then translates the message using Google Translate API. 
 The script uses the googletrans library and outputs translated text which, is then set as the message's msgstr attribute.
 
 ## Get Started

@@ -1,3 +1,35 @@
-*pyc
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Virtual env
+.venv/
+venv/
+.env/
 /env
-translation.log
+
+# IDE / Editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ruff cache
+.ruff_cache/
+
+# Translation working files
+translation_input/*
+!translation_input/.gitkeep
+translation_output/*
+!translation_output/.gitkeep
+
+# Dev instructions
+instructions.txt
+
+# General Mac OS system files
+.DS_Store
+Thumbs.db

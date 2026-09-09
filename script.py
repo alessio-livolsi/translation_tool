@@ -1,13 +1,14 @@
-# Python
-import os
 import logging
+import os
+import sys
 
-# Third Party
-from googletrans import Translator
 import polib
+from googletrans import LANGUAGES, Translator
 from tqdm import tqdm
 
-# Set up logging to a file
+OUTPUT_DIRECTORY = "output"
+
+
 logging.basicConfig(
     level=logging.DEBUG,
     filename="translation.log",
@@ -15,29 +16,80 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
-# Load the PO file
-po_file = polib.pofile("your load filename")
 
-# Translate each message in the PO file
-translator = Translator()
-for entry in tqdm(po_file, desc="Translating messages"):
-    if entry.msgstr:
-        # Skip messages that have already been translated
-        continue
-    # Translate the message using Google Translate
-    # dest = language code
-    # All language codes can be found here > https://py-googletrans.readthedocs.io/en/latest/#googletrans-languages
+def main() -> None:
+    source_filename = input(
+        "Enter the PO filename, for example examples/example_messages.po: "
+    ).strip()
+
+    if not source_filename:
+        print("Error: no filename was entered.")
+        sys.exit(1)
+
+    if not os.path.isfile(source_filename):
+        print(f"Error: '{source_filename}' does not exist.")
+        sys.exit(1)
+
+    destination_language = (
+        input("Enter the destination language code, for example fr, de, or es: ")
+        .strip()
+        .lower()
+    )
+
+    if destination_language not in LANGUAGES:
+        print(f"Error: unknown language code '{destination_language}'.")
+        print("Examples: fr, de, es, it, pt, nl")
+        sys.exit(1)
+
     try:
-        translation = translator.translate(entry.msgid, dest="your required language code").text
-    except Exception as e:
-        logging.error(f"Error translating '{entry.msgid}': {e}")
-        continue
-    # Set the translation as the message's msgstr
-    entry.msgstr = translation
+        po_file = polib.pofile(source_filename)
+    except (OSError, UnicodeError) as error:
+        logging.exception("Unable to load PO file")
+        print(f"Error: unable to load '{source_filename}': {error}")
+        sys.exit(1)
 
-# Save the translated PO file with a new filename
-base_filename = os.path.splitext("your load filename")[0]
-dest_lang_code = "enter the dest"
-translated_filename = f"{base_filename}_{dest_lang_code}.po"
-po_file.save(translated_filename)
-print(f"Your file has been translated and saved as {translated_filename}.")
+    translator = Translator()
+
+    for entry in tqdm(po_file, desc="Translating messages"):
+        if not entry.msgid:
+            continue
+
+        if entry.msgstr:
+            continue
+
+        try:
+            translation = translator.translate(
+                entry.msgid,
+                dest=destination_language,
+            ).text
+        except Exception as error:
+            logging.error(
+                "Error translating %r: %s",
+                entry.msgid,
+                error,
+            )
+            continue
+
+        entry.msgstr = translation
+
+    os.makedirs(OUTPUT_DIRECTORY, exist_ok=True)
+
+    base_filename = os.path.splitext(os.path.basename(source_filename))[0]
+
+    translated_filename = os.path.join(
+        OUTPUT_DIRECTORY,
+        f"{base_filename}_{destination_language}.po",
+    )
+
+    try:
+        po_file.save(translated_filename)
+    except OSError as error:
+        logging.exception("Unable to save translated PO file")
+        print(f"Error: unable to save '{translated_filename}': {error}")
+        sys.exit(1)
+
+    print(f"Your file has been translated and saved as '{translated_filename}'.")
+
+
+if __name__ == "__main__":
+    main()

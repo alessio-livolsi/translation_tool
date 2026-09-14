@@ -1,5 +1,5 @@
 googletrans==4.0.0-rc1
 polib==1.2.0
 black==26.5.1
-ruff==0.13.0
+ruff==0.16.7
 tqdm==4.70.0

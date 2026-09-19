@@ -1,5 +1,7 @@
 # Translation Tool
 
+[![codecov](https://codecov.io/github/alessio-livolsi/translation_tool/graph/badge.svg?token=TSJGJIILSU)](https://codecov.io/github/alessio-livolsi/translation_tool)
+
 ## Overview
 
 A simple Python script for translating `.po` files.

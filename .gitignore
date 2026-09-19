@@ -7,6 +7,9 @@ __pycache__/
 uv.lock
 requirements-dev.txt
 
+# Coverage reports
+htmlcov/
+.coverage
 
 # Logs
 *.log
@@ -25,6 +28,9 @@ venv/
 
 # Ruff cache
 .ruff_cache/
+
+# Pytest cache
+.pytest_cache/
 
 # Translation working files
 translation_input/*

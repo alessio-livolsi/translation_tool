@@ -137,14 +137,34 @@ translation_tool/
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-└── script.py
+├── script.py
+└── test_script.py
 ```
 
 * `examples/` contains a reference PO file.
 * `translation_input/` contains files to be translated.
 * `translation_output/` contains generated translations.
+* `test_script.py` contains the unit tests for the translation script.
 
 Files placed in `translation_input/` and generated in `translation_output/` are ignored by Git.
+
+## Tests
+
+The project includes unit tests written with `pytest`.
+
+Run the test suite with:
+
+```bash
+pytest -v
+```
+
+To run the tests with coverage and display any lines that are not covered:
+
+```bash
+pytest --cov=script --cov-report=term-missing
+```
+
+The tests mock external translation calls, so they do not make requests to Google Translate.
 
 ## Considerations
 

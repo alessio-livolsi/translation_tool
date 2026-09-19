@@ -1,0 +1,49 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python 3.12
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9
+        with:
+          version: "0.12.16"
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install 3.12
+
+      - name: Compile dependencies
+        run: |
+          uv pip compile requirements.txt requirements-dev.txt \
+            --python 3.12 \
+            --output-file uv.lock
+
+      - name: Install dependencies
+        run: uv pip install --system --python 3.12 -r uv.lock
+
+      - name: Run Ruff
+        run: ruff check .
+
+      - name: Run tests with coverage
+        run: |
+          pytest \
+            --cov=script \
+            --cov-report=term-missing \
+            --cov-report=xml

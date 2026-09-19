@@ -5,10 +5,10 @@ __pycache__/
 
 # Personal dev env
 uv.lock
-requirements-dev.txt
 
 # Coverage reports
 htmlcov/
+coverage.xml
 .coverage
 
 # Logs

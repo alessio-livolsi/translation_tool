@@ -1,5 +1,6 @@
 # Translation Tool
 
+[![Tests](https://github.com/alessio-livolsi/translation_tool/actions/workflows/tests.yml/badge.svg)](https://github.com/alessio-livolsi/translation_tool/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/github/alessio-livolsi/translation_tool/graph/badge.svg?token=TSJGJIILSU)](https://codecov.io/github/alessio-livolsi/translation_tool)
 
 ## Overview
